@@ -13,6 +13,21 @@ public class App {
         //Coloque los llamados a cada función de acuerdo con cada enunciado
         //codifique el control de errores para el main
 
+        //Punto 1
+        System.out.println(numerosImpares(367));
+        //Punto 2
+        System.out.println(serieFibonacci(25));
+        //Punto 3
+        int cant_llamadas = (int) (Math.random() * (30 - 20) + 20);
+            for(byte llamada = 1; llamada <= cant_llamadas; llamada ++){
+                double resultado_3 = raizAleatoria();
+                System.out.println(resultado_3);
+            }
+        //Punto 4
+        System.out.println(numerosPares(2,40));
+        //Punto 5
+        System.out.println(totalSuma(70));
+
 
     }
 
@@ -26,6 +41,38 @@ public class App {
      * 
     */
 
+    public static String numerosImpares(int numero){
+
+        try {
+            
+            final short num_min = 100, num_max = 500;
+            String resultado = "";
+            byte contador = 0, salto_lin = 8, k_suma = 2;
+
+            if(numero < num_min || numero > num_max)
+                return "El numero ingresado tiene que estar entre" + num_min + " y " + num_max;
+
+            for(byte var = 1; var <= numero; var += k_suma){
+                resultado += var;
+                contador ++;
+
+                if (contador % salto_lin == 0) {
+                    resultado += ",\n"; 
+                } else if (var + k_suma <= numero) {
+                    resultado += ", "; 
+                }
+
+            }
+
+            return "numeros impares: \n" + resultado;
+        } 
+        
+        catch (Exception e) {
+            return "Ocurrio un eror en el programa /n" + e;
+        }
+
+    }
+
     /* 2. 	Escriba una función que reciba un entero N mayor de 2  y retorne un string cono esos N términos de la 
     serie de Fibonacci (La sucesión de Fibonacci se trata de una serie infinita de números naturales que empieza con un 0 y un 1 
     y continúa añadiendo números que son la suma de los dos anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 
@@ -33,6 +80,35 @@ public class App {
      * 
      * 
     */
+
+    public static String serieFibonacci(int numero){
+
+        try {
+
+            final byte limite_inferior = 2;
+            byte var1 = 0, var2 = 1, var3 = 0, contador = 2;
+            String resultado = var1 + ", " + var2;
+
+            if (numero <= limite_inferior) 
+                return "El valor de N debe ser mayor de 2";
+            
+
+            for (int sucesión = 2; sucesión < numero; sucesión ++) {
+                var3 = (byte)(var1 + var2);
+                resultado += ", " + var3;
+                var1 = var2;
+                var2 = var3;
+                contador ++;
+            }
+            
+            return "Serie de Fibonacci (" + numero + " términos):\n" + resultado;
+        } 
+        
+        catch (Exception e) {
+            return "Ocurrio un eror en el programa /n" + e;
+        }
+
+    }
 
     /* 
      * 3.	Diseñar y desarrollar una función que NO reciba datos de entrada, genere aleatoriamente un número entre 2 y 355, 
@@ -43,8 +119,22 @@ public class App {
 
     */
 
+    public static double raizAleatoria(){
 
+        try {
+            
+            final short lim_min = 2, lim_max = 355;
+            int num_alea = (int)(Math.random() * (lim_max - lim_min) + 2);
+            return Math.sqrt(num_alea);
+        
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Ocurrio un error en el programa /n" + e);
+            return -1;
+        }
 
+    }
 
     /*4.	Diseñar y desarrollar una función que reciba un valor inicial y un valor final, para generar 900 números aleatorios 
         en este rango y retorne un texto que diga cuántos números pares fueron generados. Controle que el nro inicial sea menor que 
@@ -53,17 +143,63 @@ public class App {
         Llame la función desde el main e imprimir el resultado arrojado.
     */
 
+    public static String numerosPares(int var_inicial, int var_final){
 
+        try {
+            
+            final short cant_alea = 900;
+            short cant_pares = 0, num_alea = 0;
 
+            if(var_inicial >= var_final)
+                return "El valor final debe ser mayor al valor incial";
+
+                for(byte var=1; var <= cant_alea; var ++){
+                    num_alea = (byte)(Math.random()*(var_final-var_inicial)+var_inicial);
+                    if(num_alea % 2 == 0)
+                        cant_pares ++;
+                }
+            
+            return "La cantidad de numeros pares es: " + cant_pares;
+        } 
+        
+        catch (Exception e) {
+            return "Ocurrio un error en el programa /n" + e;
+        }
+
+    }
 
     /* 5.	Diseñar y desarrollar una función que calcule una cantidad de números aleatorios que viene como parámetro de entrada 
         y los sume.  La función deberá retornar el total de la suma. Usted defina los rangos que va a usar en el cálculo.
 
         Llame la función desde el main e imprimir el resultado arrojado.
-
       
     */
 
+    public static int totalSuma(int cantidad){
+
+        try {
+
+            final int lim_inf = 1, lim_sup = 100; 
+            int sumaTotal = 0;
+            int num_alea = (int) (Math.random() * (lim_sup - lim_inf + 1) + lim_inf);
+
+        for (int var = 1; var <= cantidad; var ++) {
+            sumaTotal += num_alea;
+            System.out.println("Número generado " + var + ": " + num_alea);
+        }
+
+        return sumaTotal;
+            
+        } 
+        
+        catch (Exception e) {
+            System.out.println("Ocurrio un error en el programa");
+            return -1;
+        }
+
+    }
+        
+    
 
     /* 6.	Se requiere una función para simular el sorteo de una lotería, de acuerdo con las siguientes condiciones:
 
@@ -99,10 +235,7 @@ public class App {
 
             La función no recibe parámetros y devuelve un string con toda la lista de premios. El main, invoca la función 
             e imprime el resultado que esta arroje. 
-
-
-     * 
-     * 
+ 
     */
 
 }
