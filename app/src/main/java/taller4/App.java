@@ -14,20 +14,22 @@ public class App {
         //codifique el control de errores para el main
 
         //Punto 1
-        System.out.println(numerosImpares(367));
+        System.out.println(numerosImpares(100));
         //Punto 2
-        System.out.println(serieFibonacci(25));
+        System.out.println(serieFibonacci(20));
         //Punto 3
-        int cant_llamadas = (int) (Math.random() * (30 - 20) + 20);
-            for(byte llamada = 1; llamada <= cant_llamadas; llamada ++){
-                double resultado_3 = raizAleatoria();
-                System.out.println(resultado_3);
+        final byte min = 20, max = 30;
+        byte cant_llamadas = (byte)(Math.random() * (max - min) + min);
+            for(byte llamada = 0; llamada < cant_llamadas; llamada ++){
+                double resultado = raizAleatoria();
+                System.out.println("Raíz cuadrada calculada; " + resultado);
             }
         //Punto 4
         System.out.println(numerosPares(2,40));
         //Punto 5
-        System.out.println(totalSuma(70));
-
+        System.out.println(totalSuma(9));
+        //Punto 6
+        System.out.println(loteria());
 
     }
 
@@ -46,25 +48,29 @@ public class App {
         try {
             
             final short num_min = 100, num_max = 500;
+            final byte salto_lin = 8, k_suma = 2;
             String resultado = "";
-            byte contador = 0, salto_lin = 8, k_suma = 2;
+            short contador = 1;
 
             if(numero < num_min || numero > num_max)
                 return "El numero ingresado tiene que estar entre" + num_min + " y " + num_max;
 
-            for(byte var = 1; var <= numero; var += k_suma){
-                resultado += var;
-                contador ++;
+            for(int var = 1; var < numero; var ++){
 
-                if (contador % salto_lin == 0) {
-                    resultado += ",\n"; 
-                } else if (var + k_suma <= numero) {
-                    resultado += ", "; 
+                if (var % k_suma != 0){
+                    resultado += (var);
+
+                    if (contador % salto_lin == 0) 
+                        resultado += ",\n"; 
+                    else
+                        resultado += ", "; 
+
+                    contador ++;
                 }
 
             }
-
             return "numeros impares: \n" + resultado;
+            
         } 
         
         catch (Exception e) {
@@ -86,22 +92,21 @@ public class App {
         try {
 
             final byte limite_inferior = 2;
-            byte var1 = 0, var2 = 1, var3 = 0, contador = 2;
-            String resultado = var1 + ", " + var2;
+            int n1 = 0, n2 = 1, n3;
+            String resultado = n1 + ", " + n2;
 
-            if (numero <= limite_inferior) 
-                return "El valor de N debe ser mayor de 2";
-            
+            if (numero <= limite_inferior){
+                return "El número debe ser mayor de 2";
+            }
 
-            for (int sucesión = 2; sucesión < numero; sucesión ++) {
-                var3 = (byte)(var1 + var2);
-                resultado += ", " + var3;
-                var1 = var2;
-                var2 = var3;
-                contador ++;
+            for (int sucesión = 3; sucesión <= numero; sucesión ++){
+                n3 = n1 + n2;
+                resultado += ", " + n3;
+                n1 = n2;
+                n2 = n3;
             }
             
-            return "Serie de Fibonacci (" + numero + " términos):\n" + resultado;
+            return "Serie de Fibonacci: " + resultado;
         } 
         
         catch (Exception e) {
@@ -109,7 +114,7 @@ public class App {
         }
 
     }
-
+    
     /* 
      * 3.	Diseñar y desarrollar una función que NO reciba datos de entrada, genere aleatoriamente un número entre 2 y 355, 
        le calcule su raíz cuadrada y retorne este valor. Para calcular las raíces usar la función Sqrt de la biblioteca Math.
@@ -124,7 +129,7 @@ public class App {
         try {
             
             final short lim_min = 2, lim_max = 355;
-            int num_alea = (int)(Math.random() * (lim_max - lim_min) + 2);
+            int num_alea = (int)(Math.random() * (lim_max - lim_min) + lim_min);
             return Math.sqrt(num_alea);
         
         } 
@@ -148,14 +153,16 @@ public class App {
         try {
             
             final short cant_alea = 900;
-            short cant_pares = 0, num_alea = 0;
+            final byte k_dos = 2, k_cero = 0; 
+            short cant_pares = 0;
+            int num_alea = 0;
 
             if(var_inicial >= var_final)
-                return "El valor final debe ser mayor al valor incial";
+                return "El primer valor debe ser mayor al segundo valor";
 
-                for(byte var=1; var <= cant_alea; var ++){
-                    num_alea = (byte)(Math.random()*(var_final-var_inicial)+var_inicial);
-                    if(num_alea % 2 == 0)
+                for(short var = 0; var < cant_alea; var ++){
+                    num_alea = (short)(Math.random()*(var_final - var_inicial) + var_inicial);
+                    if(num_alea % k_dos == k_cero)
                         cant_pares ++;
                 }
             
@@ -179,27 +186,23 @@ public class App {
 
         try {
 
-            final int lim_inf = 1, lim_sup = 100; 
+            final short lim_inf = 1, lim_sup = 10; 
             int sumaTotal = 0;
-            int num_alea = (int) (Math.random() * (lim_sup - lim_inf + 1) + lim_inf);
+            int num_alea = (int) (Math.random() * (lim_sup - lim_inf) + lim_inf);
 
-        for (int var = 1; var <= cantidad; var ++) {
-            sumaTotal += num_alea;
-            System.out.println("Número generado " + var + ": " + num_alea);
-        }
+            for (int var = 1; var <= cantidad; var ++) {
+                sumaTotal += num_alea;
+            }
 
-        return sumaTotal;
+            return sumaTotal;
             
         } 
         
         catch (Exception e) {
-            System.out.println("Ocurrio un error en el programa");
             return -1;
         }
 
     }
-        
-    
 
     /* 6.	Se requiere una función para simular el sorteo de una lotería, de acuerdo con las siguientes condiciones:
 
@@ -238,4 +241,44 @@ public class App {
  
     */
 
+    public static String loteria(){
+
+        try {
+
+            String resultado = "";
+            final int numPremios = 20;
+            final int serieMin = 100, serieMax = 150;
+
+            //Premios menores
+            resultado += "======PREMIOS MENORES=======\n";
+            for (int i = numPremios; i > 5; i--) {
+                int numeroPremiado = (int)(Math.random() * 10000); 
+                int serie = (int)(Math.random() * (serieMax - serieMin) + serieMin); 
+                resultado += "Sorteo # " + i + " - Número Premiado " + String.format("%04d", numeroPremiado) + " - Serie " + serie + "\n";
+            }
+
+            //Premios secos
+            resultado += "\n======PREMIOS SECOS=========\n";
+            for (int i = 5; i > 1; i--) {
+                int numeroPremiado = (int)(Math.random() * 10000); 
+                int serie = (int)(Math.random() * (serieMax - serieMin) + serieMin); 
+                resultado += "Sorteo # " + i + " - Número Premiado " + String.format("%04d", numeroPremiado) + " - Serie " + serie + "\n";
+            }
+
+            //Premio mayor
+            resultado += "\n======Premio mayor==========\n";
+            int numeroPremiadoMayor = (int)(Math.random() * 10000); 
+            int serieMayor = (int)(Math.random() * (serieMax - serieMin) + serieMin); 
+            resultado += "Sorteo # 1 - Número Premiado " + String.format("%04d", numeroPremiadoMayor) + " - Serie " + serieMayor + "\n";
+
+            return resultado;
+            
+        } 
+        
+        catch (Exception e) {
+            return "Ocurrió un error en la función";
+        }
+
+    }
+    
 }
